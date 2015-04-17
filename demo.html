@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video.js | HTML5 Video Player</title>
+
+  <!-- Chang URLs to wherever Video.js files will be hosted -->
+  <link href="video-js.css" rel="stylesheet" type="text/css">
+  <link href="style.css" rel="stylesheet" type="text/css">    
+  <!-- video.js must be in the <head> for older IEs to work. -->
+  <script src="video.dev.js"></script>
+    <script src="myScript.js"></script>
+  <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
+  <script>
+    videojs.options.flash.swf = "video-js.swf";
+  </script>
+
+
+</head>
+<body>
+
+  <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="264"
+      poster="http://video-js.zencoder.com/oceans-clip.png">
+    <source src="vid/big_buck_bunny_dash.mpd" type='video/mp4' />
+    <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+    <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+  </video>
+
+<script>
+    videojs('example_video_1', {
+                
+                    'techOrder': ['html5','flash'],
+                    plugins: {
+                        'myPlugin':{
+                            onTime: 2,  // 2nd seconds starts show ads
+                            offTime: 10, // 10th seconds ends ads
+                            contentAds: "Hey!, I'm here", // Set null to disappear ads
+                            wideScreen: {
+                                Width: 640, // Set width size for screen
+                                Height: 480 // Set height size for screen
+                            }
+                        }
+                    }
+            
+    }, 
+    function() {
+    
+    });
+</script>
+
+
+</body>
+</html>

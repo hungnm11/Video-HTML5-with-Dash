@@ -1,0 +1,21 @@
+.video-js .vjs-new-div {
+    position: relative;
+    width: 50%;
+    min-height: 20px;
+    background: rgba(0,0,0,0.6);
+    top: 100px;
+    left: 100px;
+    padding: 22px;
+    font-size: 12px;
+}
+
+.video-js .vjs-btn-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: red;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    padding: 2px 7px;
+}
