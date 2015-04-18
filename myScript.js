@@ -3,8 +3,17 @@
     
     var file;
     var initialization;
-    var ini;
     var ms;
+    var file;
+    var type;
+    var codecs;
+    var width;
+    var height;
+    var bandwidth;
+    var segments;
+    var vidDuration;
+    var segDuration;
+    var videoSource;
     
     //Create Component
     videojs.containerDiv = videojs.Component.extend({ 
@@ -69,12 +78,19 @@
     
     videojs.mpegDash.prototype.options_ = {};
     
+    // get url of videos
     videojs.mpegDash.prototype.getSourceURL = function() {
         var getURL = document.getElementsByTagName('source');
         return getURL[0].src;
     };
     
-    //get mpd file and parses it
+    //get mpd file
+    videojs.mpegDash.prototype.getMPDFile = function() {
+        var getMPD = document.getElementsByTagName('video');
+        return getMPD[0].getAttribute('file');
+    }
+    
+    //parses from mpd file
     videojs.mpegDash.prototype.getData = function(ms_, url) {
         
         if(url !== "") {
@@ -104,17 +120,35 @@
     // Get and display the parameters of the .mpd file 
     
     videojs.mpegDash.prototype.getFileTypes = function(data) {
-        var file;
+        
         try {
-            file = data.querySelectorAll("BaseURL")[0].textContent.toString();
+            this.file = data.querySelectorAll("BaseURL")[0].textContent.toString();
+            var rep = data.querySelectorAll("Representation");
+            this.type = rep[0].getAttribute("mimeType");
+            this.codecs = rep[0].getAttribute("codecs");
+            this.width = rep[0].getAttribute("width");
+            this.height = rep[0].getAttribute("height");
+            this.bandwidth = rep[0].getAttribute("bandwidth");
             
-            ini = data.querySelectorAll("Initialization");
-            initialization = ini[0].getAttribute("range");
-            console.log(initialization);
+            var ini = data.querySelectorAll("Initialization");
+            this.initialization = ini[0].getAttribute("range");
+            this.segments = ini[0].querySelectorAll("SegmentURL");
+            
+            var period = data.querySelectorAll("Period");
+            var vidTempDuration = period[0].getAttribute("duration");
+            //vidDuration = parseDuration(vidTempDuration);
+            
+            var segList = data.querySelectorAll("SegmentList");
+            this.segDuration = segList[0].getAttribute("duration");
+            
+            console.log(this.segDuration);
+            
         } catch(e) {
             console.log('error');
             return;
         }
+        
+        this.showTypes();
     };
     
     videojs.mpegDash.prototype.showTypes = function() {
@@ -122,34 +156,31 @@
     };
 
     // create mediaSource and initialize video.
-    videojs.mpegDash.prototype.setupVideo = function(ms) {
-        
-        if(window.MediaSource || window.WebKitMediaSource) {
-            // create MediaSource
-            ms = new (window.MediaSource || window.WebKitMediaSource)();
-        } else {
-            console.log('mediasource or syntax not supported');
-            return;
-        }
-        
+    videojs.mpegDash.prototype.setupVideo = function(data) {
+
         var url = URL.createObjectURL(ms);
         this.player_.pause();
         videojs.src = url;
+        //this.initVideo(initialization, file);
         
+        
+        console.log(videojs.mpegDash.prototype.hasOwnProperty());
+        /*
         ms.addEventListener('sourceopen', function(e) {
             try {
-                var videoSource = ms.addSourceBuffer('video/mp4');
-                this.initVideo(initialization, file);
+                videoSource = ms.addSourceBuffer('video/mp4');
+                //this.initVideo(initialization, file);
+                console.log(videoSource);
             } catch (e) {
                 console.log('Exception calling addSourceBuffer for video', e);
                 return;
             }
         }, false);
-        
+        */
     };
     
     
-    videojs.mpegDash.prototype.initVideo = function(ms, url) {
+    videojs.mpegDash.prototype.initVideo = function(range, url) {
     
         var xhr = new XMLHttpRequest();
         if(url) {
@@ -158,7 +189,7 @@
             //segCheck = (timeToDownload(range) * .8).toFixed(3);
             xhr.responseType = 'arraybuffer';
             xhr.send();
-            
+            console.log('a');
             try {
                 xhr.addEventListener("readystatechange", function() {
                     if(xhr.readyState == xhr.DONE) {
@@ -245,14 +276,22 @@
             console.log(mpd.getSourceURL());            
         });
         
-        //console.log(mpd.getSourceURL());
+        if(window.MediaSource || window.WebKitMediaSource) {
+            // create MediaSource
+            ms = new (window.MediaSource || window.WebKitMediaSource)();
+            mpd.setupVideo(ms);
+        } else {
+            console.log('mediasource or syntax not supported');
+            return;
+        }
+        
+        //console.log();
 
         //console.log(mpd.setupVideo(ms));
-        //mpd.setupVideo(ms);
         
         //mpd.initVideo(ms, mpd.getSourceURL());
        
-        mpd.getData(ms, mpd.getSourceURL());
+        mpd.getData(ms, mpd.getMPDFile());
     };
     
     videojs.plugin( 'myPlugin', pluginFn );
