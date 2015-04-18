@@ -4,6 +4,7 @@
     var file;
     var initialization;
     var ini;
+    var ms;
     
     //Create Component
     videojs.containerDiv = videojs.Component.extend({ 
@@ -89,30 +90,18 @@
                     
                     var xmlData = parser.parseFromString(tempoutput, "text/xml", 0);
                     console.log("parsing mpd file");
-                    /*
-                    // Get and display the parameters of the .mpd file   
-                    try {
-                        file = xmlData.querySelectorAll("BaseURL")[0].textContent.toString();
-                        
-                        ini = xmlData.querySelectorAll("Initialization");
-                        initialization = ini[0].getAttribute("range");
-                        console.log(initialization);
-                    } catch(e) {
-                        console.log('error');
-                        return;
-                    }
-                    */
                     videojs.mpegDash.prototype.getFileTypes(xmlData);
                     videojs.mpegDash.prototype.showTypes(file);
                     //this.showTypes();
                     //setupVideo(); // Set up video object, buffers, etc 
-                    //console.log(videojs.mpegDash.prototype);
                     //clearVars(); // Initialize a few variables on reload
                 }
             }
             
         }
     };
+    
+    // Get and display the parameters of the .mpd file 
     
     videojs.mpegDash.prototype.getFileTypes = function(data) {
         var file;
@@ -123,7 +112,8 @@
             initialization = ini[0].getAttribute("range");
             console.log(initialization);
         } catch(e) {
-        
+            console.log('error');
+            return;
         }
     };
     
@@ -133,6 +123,15 @@
 
     // create mediaSource and initialize video.
     videojs.mpegDash.prototype.setupVideo = function(ms) {
+        
+        if(window.MediaSource || window.WebKitMediaSource) {
+            // create MediaSource
+            ms = new (window.MediaSource || window.WebKitMediaSource)();
+        } else {
+            console.log('mediasource or syntax not supported');
+            return;
+        }
+        
         var url = URL.createObjectURL(ms);
         this.player_.pause();
         videojs.src = url;
@@ -247,14 +246,9 @@
         });
         
         //console.log(mpd.getSourceURL());
-        
-        
-        
-        // create MediaSource
-        var ms = new (window.MediaSource || window.WebKitMediaSource)();
-        
+
         //console.log(mpd.setupVideo(ms));
-        mpd.setupVideo(ms);
+        //mpd.setupVideo(ms);
         
         //mpd.initVideo(ms, mpd.getSourceURL());
        
