@@ -107,9 +107,7 @@
                     var xmlData = parser.parseFromString(tempoutput, "text/xml", 0);
                     console.log("parsing mpd file");
                     videojs.mpegDash.prototype.getFileTypes(xmlData);
-                    videojs.mpegDash.prototype.showTypes(file);
-                    //this.showTypes();
-                    //setupVideo(); // Set up video object, buffers, etc 
+                    videojs.mpegDash.prototype.setupVideo(); // Set up video object, buffers, etc 
                     //clearVars(); // Initialize a few variables on reload
                 }
             }
@@ -152,19 +150,20 @@
     };
     
     videojs.mpegDash.prototype.showTypes = function() {
-
+        //console.log(this.file);
     };
 
     // create mediaSource and initialize video.
-    videojs.mpegDash.prototype.setupVideo = function(data) {
+    videojs.mpegDash.prototype.setupVideo = function() {
 
         var url = URL.createObjectURL(ms);
-        this.player_.pause();
+        //this.player_.pause();
         videojs.src = url;
-        //this.initVideo(initialization, file);
         
-        
-        console.log(videojs.mpegDash.prototype.hasOwnProperty());
+        file = this.file;
+        initialization = this.initialization;
+        this.initVideo(initialization, file);
+        //console.log(this);
         /*
         ms.addEventListener('sourceopen', function(e) {
             try {
@@ -185,17 +184,16 @@
         var xhr = new XMLHttpRequest();
         if(url) {
             xhr.open('GET', url);
-            //xhr.setRequestHeader('Range', 'bytes=' +  range);
+            xhr.setRequestHeader('Range', 'bytes=' +  range);
             //segCheck = (timeToDownload(range) * .8).toFixed(3);
             xhr.responseType = 'arraybuffer';
             xhr.send();
-            console.log('a');
+            
             try {
                 xhr.addEventListener("readystatechange", function() {
                     if(xhr.readyState == xhr.DONE) {
-                        console.log('not error');
                         try {
-                            videoSource.appendBuffer(new Unit8Array(xhr.response));
+                           // videoSource.appendBuffer(new Unit8Array(xhr.response));
                         } catch(e) {
                             console.log('error');
                         }
@@ -276,10 +274,9 @@
             console.log(mpd.getSourceURL());            
         });
         
+        // create MediaSource
         if(window.MediaSource || window.WebKitMediaSource) {
-            // create MediaSource
             ms = new (window.MediaSource || window.WebKitMediaSource)();
-            mpd.setupVideo(ms);
         } else {
             console.log('mediasource or syntax not supported');
             return;
@@ -290,7 +287,7 @@
         //console.log(mpd.setupVideo(ms));
         
         //mpd.initVideo(ms, mpd.getSourceURL());
-       
+        //mpd.showTypes();
         mpd.getData(ms, mpd.getMPDFile());
     };
     
