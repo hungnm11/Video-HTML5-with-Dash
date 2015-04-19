@@ -1,7 +1,6 @@
 (function() {
     'use strict';
     
-    var file;
     var initialization;
     var ms;
     var file;
@@ -26,7 +25,6 @@
     videojs.containerDiv.prototype.options_ = {
         adverstiment: {
                         setTimeStart: 0,  // set number of seconds to show ads
-                        offTime: 10, // 10th seconds ends ads
                         contentAds: "Hey! I'm here", // Set null to disappear ads
                         setAdverstimentTime: 0
                     },
@@ -293,7 +291,7 @@
                     c = true; 
                 }
 
-                if (getCTime == (options.adverstiment.setAdverstimentTime + options.adverstiment.setTimeStart + 2) && c == true) {
+                if (getCTime == (options.adverstiment.setAdverstimentTime + options.adverstiment.setTimeStart + 1) && c == true) {
                     this.removeChild(myComponent);
                     c = false;
                 }
