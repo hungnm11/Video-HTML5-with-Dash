@@ -13,7 +13,11 @@
 Javascript
 
 ##License##
+<<<<<<< HEAD
 Video.js is licensed under the Apache License, Version 2.0. [View the license file](http://www.apache.org/licenses/LICENSE-2.0)
+=======
+Video.js is licensed under the Apache License, Version 2.0. View the license file
+>>>>>>> efe41681b903d472be0e262229c95cc860c917e1
 
 Copyright 2014 Brightcove, Inc.
 
