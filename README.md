@@ -15,7 +15,7 @@ HTML5 video support for MPEG-DASH as of today:
 Chrome 23+ with H264/AAC MP4 format
 IE 11 on Windows 8+ with H264/AAC MP4 format
 Opera 20+ with VP8/VP9 video and Vorbis/Opus audio in WebM format
-Firefox 33 does not support MediaSource by default as of today. You can activate it after switching the about:config preference media.mediasource.enabled to true.
+Firefox 33 does not support [MediaSource](https://developer.mozilla.org/en-US/docs/Web/API/MediaSource) by default as of today. You can activate it after switching the about:config preference media.mediasource.enabled to true.
 Safari 8+ on Mac OS X Yosemite (10.10)
 iOS 8 Safari does not provide support
 Chrome 34+ on Android 4.2+
