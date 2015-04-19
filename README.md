@@ -32,9 +32,6 @@ Note: MPEG-DASH is not as such a streaming protocol, it is a container format li
 ##License##
 Video.js is licensed under the Apache License, Version 2.0. [View the license file](http://www.apache.org/licenses/LICENSE-2.0)
 
-Video.js is licensed under the Apache License, Version 2.0. View the license file
-
-
 Copyright 2014 Brightcove, Inc.
 
 ##Special Thank You##
