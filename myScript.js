@@ -24,6 +24,11 @@
     
     // default options
     videojs.containerDiv.prototype.options_ = {
+        adverstiment: {
+                        onTime: 2,  // 2nd seconds starts show ads
+                        offTime: 0, // 10th seconds ends ads
+                        contentAds: null, // Set null to disappear ads
+                    },
         wideScreen: {
             Width: 640,
             Height: 264
@@ -221,8 +226,8 @@
     //Plugin function
     var pluginFn = function(options) {
         
-        var videoSource;
-        var initialization;
+        var timeInSecs;
+        var ticker;
         
         var myComponent =  new videojs.containerDiv(this, options);
         
@@ -232,37 +237,35 @@
          
         this.player_.dimensions(myComponent.getNewWidth(this.options), myComponent.getNewHeight(this.options));
         
-        if (options.contentAds != null) {
+        console.log(options.adverstiment.contentAds);
+        
+        if (options.adverstiment.contentAds != null) {
             var c = false;
             this.on('timeupdate', function() {
                 
                 var getCTime = Math.floor(this.cache_.currentTime);
                 
-                if (getCTime == options.onTime && c == false) {
+                if (getCTime == options.adverstiment.onTime && c == false) {
                     
                     var myNewDiv = this.addChild(myComponent);
-                    myNewDiv.contentEl_.innerHTML = options.contentAds;
-                    
-                    var timeInSecs;
-                    var ticker;
+                    myNewDiv.contentEl_.innerHTML = options.adverstiment.contentAds;
 
                     function startTimer(secs){
-                        timeInSecs = parseInt(secs)-1;
+                        timeInSecs = parseInt(secs);
                         ticker = setInterval(tick,1000);   // every second
                     }
 
                     function tick() {
                         var secs = timeInSecs;
-                        if (secs>0) {
+                        console.log(secs);
+                        if (secs > 0) {
                             timeInSecs--;
-                        }
-                        else {
+                        } else {
                             clearInterval(ticker); // stop counting at zero
                         }
                         myComponent.newDivTimer_.innerText = secs;
                     }
-
-                    startTimer(options.offTime - options.onTime);  // starts count down  
+                    startTimer(options.adverstiment.offTime - options.adverstiment.onTime);  // starts count down  
                     
                     
                     //Get screen size of ads
@@ -289,7 +292,7 @@
                     c = true; 
                 }
 
-                if (getCTime == options.offTime && c == true) {
+                if (getCTime == (options.adverstiment.offTime + 2) && c == true) {
                     this.removeChild(myComponent);
                     c = false;
                 }

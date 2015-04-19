@@ -32,9 +32,11 @@
                     'techOrder': ['html5','flash'],
                     plugins: {
                         'myPlugin':{
-                            onTime: 2,  // 2nd seconds starts show ads
-                            offTime: 10, // 10th seconds ends ads
-                            contentAds: "Hey!, I'm here", // Set null to disappear ads
+                            adverstiment: {
+                                onTime: 2,  // 2nd seconds starts show ads
+                                offTime: 10, // 10th seconds ends ads
+                                contentAds: "Hey! I'm here", // Set null to disappear ads
+                            },
                             wideScreen: {
                                 Width: 640, // Set width size for screen
                                 Height: 480 // Set height size for screen
