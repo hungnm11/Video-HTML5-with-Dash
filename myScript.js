@@ -25,9 +25,10 @@
     // default options
     videojs.containerDiv.prototype.options_ = {
         adverstiment: {
-                        onTime: 2,  // 2nd seconds starts show ads
-                        offTime: 0, // 10th seconds ends ads
-                        contentAds: null, // Set null to disappear ads
+                        setTimeStart: 0,  // set number of seconds to show ads
+                        offTime: 10, // 10th seconds ends ads
+                        contentAds: "Hey! I'm here", // Set null to disappear ads
+                        setAdverstimentTime: 0
                     },
         wideScreen: {
             Width: 640,
@@ -54,7 +55,7 @@
         
         var newDivTimer = videojs.createEl('div', {
             className: 'vjs-div-time',
-            innerHTML: 'Ads in '
+            innerHTML: 'Ads in ' + (this.options_.adverstiment.setAdverstimentTime)
         });
         
         this.newDivTimer_ = newDivTimer;
@@ -246,7 +247,7 @@
                 
                 var getCTime = Math.floor(this.cache_.currentTime);
                 
-                if (getCTime == options.adverstiment.onTime && c == false) {
+                if (getCTime == options.adverstiment.setTimeStart && c == false) {
                     
                     var myNewDiv = this.addChild(myComponent);
                     myNewDiv.contentEl_.innerHTML = options.adverstiment.contentAds;
@@ -258,7 +259,6 @@
 
                     function tick() {
                         var secs = timeInSecs;
-                        console.log(secs);
                         if (secs > 0) {
                             timeInSecs--;
                         } else {
@@ -266,8 +266,8 @@
                         }
                         myComponent.newDivTimer_.innerText = 'Ads in ' + secs;
                     }
-                    startTimer(options.adverstiment.offTime - options.adverstiment.onTime);  // starts count down  
                     
+                    startTimer(options.adverstiment.setAdverstimentTime); // starts count down  
                     
                     //Get screen size of ads
                     var getWidthAds = myNewDiv.el_.offsetWidth;
@@ -293,7 +293,7 @@
                     c = true; 
                 }
 
-                if (getCTime == (options.adverstiment.offTime + 2) && c == true) {
+                if (getCTime == (options.adverstiment.setAdverstimentTime + options.adverstiment.setTimeStart + 2) && c == true) {
                     this.removeChild(myComponent);
                     c = false;
                 }
