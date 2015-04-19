@@ -47,6 +47,14 @@
             innerHTML: 'x'
         });
         
+        var newDivTimer = videojs.createEl('div', {
+            className: 'vjs-div-time',
+        });
+        
+        this.newDivTimer_ = newDivTimer;
+        
+        newDiv.appendChild(this.newDivTimer_);
+        
         this.newDivClose_ = newDivClose;
         
         newDiv.appendChild(this.newDivClose_);
@@ -209,6 +217,7 @@
         }
     };
     
+    
     //Plugin function
     var pluginFn = function(options) {
         
@@ -225,14 +234,37 @@
         
         if (options.contentAds != null) {
             var c = false;
-
             this.on('timeupdate', function() {
+                
                 var getCTime = Math.floor(this.cache_.currentTime);
+                
                 if (getCTime == options.onTime && c == false) {
-
+                    
                     var myNewDiv = this.addChild(myComponent);
                     myNewDiv.contentEl_.innerHTML = options.contentAds;
+                    
+                    var timeInSecs;
+                    var ticker;
 
+                    function startTimer(secs){
+                        timeInSecs = parseInt(secs)-1;
+                        ticker = setInterval(tick,1000);   // every second
+                    }
+
+                    function tick() {
+                        var secs = timeInSecs;
+                        if (secs>0) {
+                            timeInSecs--;
+                        }
+                        else {
+                            clearInterval(ticker); // stop counting at zero
+                        }
+                        myComponent.newDivTimer_.innerText = secs;
+                    }
+
+                    startTimer(options.offTime - options.onTime);  // starts count down  
+                    
+                    
                     //Get screen size of ads
                     var getWidthAds = myNewDiv.el_.offsetWidth;
                     var getHeightAds = myNewDiv.el_.offsetHeight;
@@ -248,20 +280,25 @@
                     } else {
                         myNewDiv.el_.style.left = Math.abs(randomWidth) + 'px';
                         myNewDiv.el_.style.top = Math.abs(randomHeight - (getHeightAds - 30)) + 'px';
-                }
+                    }
 
                     this.one(myNewDiv.newDivClose_,'click', function() {
                         this.removeChild(myComponent);
                     });
-                    c = true;
+                    
+                    c = true; 
                 }
 
                 if (getCTime == options.offTime && c == true) {
                     this.removeChild(myComponent);
                     c = false;
                 }
+                //console.log(this);
+               
+                
             });
         }
+       
         
         // Get and read MPD file
         var mpd = new videojs.mpegDash(this, options);
