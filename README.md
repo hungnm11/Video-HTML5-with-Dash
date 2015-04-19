@@ -9,8 +9,19 @@
 
 ##Usage##
 
-##Vendors##
-Javascript
+## Browser Support##
+HTML5 video support for MPEG-DASH as of today:
+
+Chrome 23+ with H264/AAC MP4 format
+IE 11 on Windows 8+ with H264/AAC MP4 format
+Opera 20+ with VP8/VP9 video and Vorbis/Opus audio in WebM format
+Firefox 33 does not support MediaSource by default as of today. You can activate it after switching the about:config preference media.mediasource.enabled to true.
+Safari 8+ on Mac OS X Yosemite (10.10)
+iOS 8 Safari does not provide support
+Chrome 34+ on Android 4.2+
+Live can be erratic but begins to be stable.
+
+Note: MPEG-DASH is not as such a streaming protocol, it is a container format like MPEG-4 (ie the MPEG in MPEG-DASH) the delivery protocol being HTTP
 
 ##License##
 Video.js is licensed under the Apache License, Version 2.0. [View the license file](http://www.apache.org/licenses/LICENSE-2.0)
