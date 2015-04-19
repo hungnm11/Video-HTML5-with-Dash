@@ -1,4 +1,4 @@
-# Video.js - HTML5 Video Player with Adverstiment random positions and Streaming MPEG-DASH
+# Video.js - HTML5 Video Player with advertisement random positions and Streaming MPEG-DASH
 
   Streaming MPEG-DASH is not now available.
 
