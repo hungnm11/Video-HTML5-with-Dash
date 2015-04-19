@@ -13,3 +13,6 @@
 Javascript
 
 ##License##
+
+  Special Thank You
+Thanks to Steve Heffernan for the amazing Video.js and to John Hurliman for the original version of the YouTube tech
