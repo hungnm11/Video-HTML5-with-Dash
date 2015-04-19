@@ -14,6 +14,7 @@ Javascript
 
 ##License##
 Video.js is licensed under the Apache License, Version 2.0. View the license file
+
 Copyright 2014 Brightcove, Inc.
 
 ##Special Thank You##
