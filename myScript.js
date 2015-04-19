@@ -54,6 +54,7 @@
         
         var newDivTimer = videojs.createEl('div', {
             className: 'vjs-div-time',
+            innerHTML: 'Ads in '
         });
         
         this.newDivTimer_ = newDivTimer;
@@ -263,7 +264,7 @@
                         } else {
                             clearInterval(ticker); // stop counting at zero
                         }
-                        myComponent.newDivTimer_.innerText = secs;
+                        myComponent.newDivTimer_.innerText = 'Ads in ' + secs;
                     }
                     startTimer(options.adverstiment.offTime - options.adverstiment.onTime);  // starts count down  
                     
