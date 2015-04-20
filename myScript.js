@@ -251,7 +251,7 @@
                     myNewDiv.contentEl_.innerHTML = options.advertisement.contentAds;
 
                     function startTimer(secs){
-                        timeInSecs = parseInt(secs);
+                        timeInSecs = parseInt(secs - 1);
                         ticker = setInterval(tick,1000);   // every second
                     }
 
