@@ -103,8 +103,12 @@
         return getMPD[0].getAttribute('file');
     }
     
+    videojs.mpegDash.prototype.DASHPlayer = function() {
+        console.log(this.getMPDFile());
+    };
+    
     //parses from mpd file
-    videojs.mpegDash.prototype.getData = function(ms_, url) {
+    videojs.mpegDash.prototype.loadMPD = function(ms_, url) {
         
         if(url !== "") {
             var xhr = new XMLHttpRequest();
@@ -151,8 +155,6 @@
             
             var segList = data.querySelectorAll("SegmentList");
             this.segDuration = segList[0].getAttribute("duration");
-            
-            console.log(this.segDuration);
             
         } catch(e) {
             console.log('error');
@@ -236,8 +238,6 @@
         var getHeight = this.height(this.offsetHeight, false);
          
         this.player_.dimensions(myComponent.getNewWidth(this.options), myComponent.getNewHeight(this.options));
-        
-        console.log(options.advertisement.contentAds);
         
         if (options.advertisement.contentAds != null) {
             var c = false;
@@ -327,7 +327,8 @@
         
         //mpd.initVideo(ms, mpd.getSourceURL());
         //mpd.showTypes();
-        mpd.getData(ms, mpd.getMPDFile());
+        mpd.loadMPD(ms, mpd.getMPDFile());
+        mpd.DASHPlayer();
     };
     
     videojs.plugin( 'myPlugin', pluginFn );
