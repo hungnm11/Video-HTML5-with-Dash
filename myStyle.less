@@ -1,0 +1,41 @@
+/* Variables */
+@body-bg-color: #83b692;    // green
+@text-color: #fff;          // white
+@button-bg-color: #f9627d;  // pink
+@position-relative: relative;
+@width-50percent: 50%;
+@width-100percent: 100%;
+@bg-transparent: rgba(0, 0 ,0, 0.6);
+@font-size: 12px;
+
+/* LESS CSS */
+body {
+  background: @body-bg-color;
+  color: @text-color;
+  font-family: sans-serif;
+  text-align: center;
+}
+a:link, a:visited {
+  background: @button-bg-color;
+  color: @text-color;
+  display: inline-block;
+  padding: 10px 10px;
+  text-decoration: none;
+}
+a:hover {
+  background-color: desaturate(@button-bg-color, 50%);
+}
+a:active {
+  background-color: saturate(@button-bg-color, 50%);
+}
+
+.video-js .vjs-new-div {
+    position: @position-relative;
+    width: @width-50percent;
+    min-height: 20px;
+    background: @bg-transparent;
+    top: 100px;
+    left: 100px;
+    padding: 22px;
+    font-size: @font-size;
+}
