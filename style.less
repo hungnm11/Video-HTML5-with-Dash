@@ -3,17 +3,20 @@
 @text-color: #fff;          // white
 @button-bg-color: #f9627d;  // pink
 @position-relative: relative;
+@position-absolute: absolute;
 @width-50percent: 50%;
 @width-100percent: 100%;
 @bg-transparent: rgba(0, 0 ,0, 0.6);
 @font-size: 12px;
+@text-align: center;
+
 
 /* LESS CSS */
 body {
   background: @body-bg-color;
   color: @text-color;
   font-family: sans-serif;
-  text-align: center;
+  text-align: @text-align;
 }
 a:link, a:visited {
   background: @button-bg-color;
@@ -42,25 +45,30 @@ a:active {
 }
 
 .video-js .vjs-btn-close {
-    position: absolute;
+    position: @position-absolute;
     top: 0px;
     right: 0px;
     background: red;
     cursor: pointer;
-    font-size: 16px;
-    text-align: center;
+    font-size: @font-size + 4;
+    text-align: @text-align;
     padding: 2px 7px;
-    color: #fff;
+    color: @text-color;
 }
 
 .video-js .vjs-div-time {
-    position: absolute;
+    position: @position-absolute;
     top: 0px;
     right: 23px;
     background: red;
     cursor: pointer;
-    font-size: 14px;
-    text-align: center;
+    font-size: @font-size + 2;
+    text-align: @text-align;
     padding: 3px 7px;
-    color: #fff;
+    color: @text-color;
+}
+
+.vjs-default-skin .vjs-big-play-button {
+    border-radius: 5em;
+    width: 2.6em;
 }

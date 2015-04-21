@@ -293,11 +293,7 @@
 
                 if (getCTime == (options.advertisement.setAdvertisementTime + options.advertisement.setTimeStart + 1) && c == true) {
                     this.removeChild(myComponent);
-                    c = false;
                 }
-                //console.log(this);
-               
-                
             });
         }
        
