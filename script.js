@@ -13,6 +13,7 @@
     var vidDuration;
     var segDuration;
     var videoSource;
+    var maxBandwidth = 8 * 1024 * 1024; // 4Mbps
     
     //Create Component
     videojs.containerDiv = videojs.Component.extend({ 
@@ -225,11 +226,36 @@
     };
     
     
+    function bandwidth(initial_bps, weight_f, weight_s) {
+        this.identifier = 0;
+        this.bps = initial_bps;
+        this.weight_f = weight_f;
+        this.weight_s = weight_s;
+        this.observer = new Array();
+        this.observer_num = 0;
+    };
+    
+    bandwidth.prototype.endBitrateMeasurementByID = function(id, lengthInBytes) {
+        var end = new Date().getTime();
+    }
+    
+    bandwidth.prototype.addObserver = function(obj_) {
+        this.observer[this.observer_num++] = obj_;
+    };
+    
     //Plugin function
     var pluginFn = function(options) {
         
         var timeInSecs;
         var ticker;
+        
+        
+        //Bandwidth
+        var myBandwidth = new bandwidth(10000, 1.1, 0.9);
+        
+        console.log(myBandwidth.endBitrateMeasurementByID());
+        
+        var data = new Uint8Array(this.response);
         
         var myComponent =  new videojs.containerDiv(this, options);
         
