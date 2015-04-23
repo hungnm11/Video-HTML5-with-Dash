@@ -14,6 +14,8 @@
     var segDuration;
     var videoSource;
     var maxBandwidth = 8 * 1024 * 1024; // 4Mbps
+    var cacheControl_;
+    var timeID_;
     
     //Create Component
     videojs.containerDiv = videojs.Component.extend({ 
@@ -163,6 +165,7 @@
         }
         
         this.showTypes();
+        this.fetchSegment();
     };
     
     videojs.mpegDash.prototype.showTypes = function() {
@@ -243,6 +246,24 @@
         this.observer[this.observer_num++] = obj_;
     };
     
+    
+    videojs.mpegDash.prototype.fetchSegment = function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', this.getMPDFile, true);
+        xhr.setRequestHeader('Cache-Control', cacheControl_);
+        if(this.initialization != null) {
+            xhr.setRequestHeader('Range', 'bytes=' + this.initialization);
+            console.log('DASH JS Client fetching byte range: ' + this.initialization);
+        }
+        xhr.responseType = 'arraybuffer';
+        
+        xhr.onload = function(e) {
+            var data = new Uint8Array(this.response);
+            console.log(data);
+        }
+        
+    };
+    
     //Plugin function
     var pluginFn = function(options) {
         
@@ -253,9 +274,7 @@
         //Bandwidth
         var myBandwidth = new bandwidth(10000, 1.1, 0.9);
         
-        console.log(myBandwidth.endBitrateMeasurementByID());
         
-        var data = new Uint8Array(this.response);
         
         var myComponent =  new videojs.containerDiv(this, options);
         
@@ -343,7 +362,7 @@
             return;
         }
         
-        //console.log();
+        mpd.fetchSegment();
 
         //console.log(mpd.setupVideo(ms));
         
