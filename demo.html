@@ -4,12 +4,12 @@
   <title>Video.js | HTML5 Video Player</title>
 
   <!-- Chang URLs to wherever Video.js files will be hosted -->
-  <link href="video-js.css" rel="stylesheet" type="text/css">
-  <link href="style.css" rel="stylesheet" type="text/css">
+  <link href="video-js.less" rel="stylesheet/less" type="text/css">
+  <link href="style.less" rel="stylesheet/less" type="text/css">
     
   <!-- video.js must be in the <head> for older IEs to work. -->
   <script src="video.dev.js"></script>
-  <script src="dash.all.js"></script>
+  <script src="less.min.js"></script>
   <script src="prefixfree.min.js"></script>
   <script src="script.js"></script>
   <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
@@ -21,16 +21,18 @@
 </head>
 <body>
 
-  <!-- Standard video.js embed with a DASH source -->
-<video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" data-setup="{}">
-  <source src="http://dash.edgesuite.net/akamai/test/caption_test/ElephantsDream/elephants_dream_480p_heaac5_1.mpd" type='application/dash+xml'>
+  <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none" width="640" height="264"
+      poster="http://video-js.zencoder.com/oceans-clip.png" file="vid/big_buck_bunny_dash.mpd">
+    <source src="vid/big_buck_bunny_dashinit.mp4" type='video/mp4' />
     <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
     <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
     <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-</video>
+  </video>
 
 <script>
     videojs('example_video_1', {
+                
+                    'techOrder': ['html5','flash'],
                     plugins: {
                         'myPlugin':{
                             advertisement: {
@@ -44,14 +46,11 @@
                             }
                         }
                     }
+            
+    }, 
+    function() {
     
-    }, function() { });
-    
-    var notSupportedDiv = document.getElementById('dash-not-supported');
-  if (!videojs.Dashjs.isSupported()) {
-    document.body.insertBefore(notSupportedDiv, document.getElementById('example_video_1'));
-    notSupportedDiv.style.display = 'block';
-  }
+    });
 </script>
 
 
